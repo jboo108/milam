@@ -1,0 +1,34 @@
+{
+  "ops": [
+    {
+      "id": "milam-web",
+      "args": {
+        "image": "REPLACE_WITH_YOUR_DOCKER_USERNAME/milam-web:latest",
+        "expose": 3000,
+        "env": {
+          "NODE_ENV": "production",
+          "PORT": "3000",
+          "HOSTNAME": "0.0.0.0",
+          "NEXT_TELEMETRY_DISABLED": "1",
+
+          "NOSANA_ENDPOINT": "https://5i8frj7ann99bbw9gzpprvzj2esugg39hxbb4unypskq.node.k8s.prd.nos.ci/v1",
+          "NOSANA_MODEL": "Qwen3.5-9B-FP8",
+          "NOSANA_API_KEY": "nosana",
+
+          "ARCIUM_MASTER_KEY": "REPLACE_WITH_BASE64_32BYTE_KEY",
+
+          "CORTEX_API_KEY": "REPLACE_WITH_CLUDE_KEY_OR_LEAVE_EMPTY_FOR_LOCAL_FALLBACK",
+
+          "SOLANA_SECRET_KEY": "REPLACE_WITH_BS58_SOLANA_KEY_OR_LEAVE_EMPTY_TO_SKIP_ANCHOR",
+          "SOLANA_RPC_URL": "https://api.mainnet-beta.solana.com",
+          "SOLANA_CLUSTER": "mainnet-beta"
+        }
+      },
+      "execution": {
+        "group": "run"
+      },
+      "type": "container/run"
+    }
+  ],
+  "version": "0.1"
+}

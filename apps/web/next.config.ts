@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+import { fileURLToPath } from "node:url";
+import { dirname } from "node:path";
 
 // TODO(Day 5): wire serwist PWA via withSerwist({ swSrc, swDest }) wrapper
 // (serwist + @serwist/next already installed). Leaving stubbed until manifest
@@ -33,19 +35,17 @@ const securityHeaders = [
   },
 ];
 
-console.log("[next.config] loaded, cwd=", process.cwd());
+// Pin the turbopack + file-tracing roots to *this file's* directory so the
+// build works identically on Windows dev and Linux Docker. `import.meta.url`
+// resolves to the Next config path at build time, and dirname gives us the
+// app root without hardcoding platform-specific strings.
+const appRoot = dirname(fileURLToPath(import.meta.url));
+
+console.log("[next.config] loaded, cwd=", process.cwd(), "appRoot=", appRoot);
 
 const nextConfig: NextConfig = {
-  // Pin turbopack root to this app so it doesn't pick up an unrelated
-  // lockfile higher up in C:\Users\JBOO\.
-  // Pin both the turbopack root and the file-tracing root to this app's
-  // directory to (a) silence the multi-lockfile warning caused by an
-  // unrelated package-lock.json in C:\Users\JBOO\ and (b) keep file tracing
-  // scoped to the web app.
-  turbopack: {
-    root: "C:\\Users\\JBOO\\dreams\\apps\\web",
-  },
-  outputFileTracingRoot: "C:\\Users\\JBOO\\dreams\\apps\\web",
+  turbopack: { root: appRoot },
+  outputFileTracingRoot: appRoot,
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
