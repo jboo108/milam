@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DREAMS — Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep: #0a0a0f;
+    --night: #0f0f1a;
+    --twilight: #1a1a2e;
+    --mist: #16213e;
+    --moon: #e8e4df;
+    --silver: #a8a4a0;
+    --whisper: #6b6768;
+    --dream-blue: #4a6fa5;
+    --dream-violet: #7b68ae;
+    --dream-rose: #c4727f;
+    --dawn: #d4a373;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-snap-type: y mandatory; overflow-x: hidden; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deep);
+    color: var(--moon);
+    overflow-x: hidden;
+  }
+
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 120px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 900px) {
+    .slide { padding: 60px 40px; }
+  }
+
+  /* ── Slide Navigation ── */
+  .slide-nav {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .slide-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--whisper);
+    opacity: 0.4;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    border: none;
+  }
+  .slide-dot.active {
+    opacity: 1;
+    background: var(--moon);
+    transform: scale(1.4);
+  }
+  .slide-dot:hover { opacity: 0.8; }
+
+  .slide-counter {
+    position: fixed;
+    bottom: 32px;
+    right: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--whisper);
+    z-index: 100;
+    letter-spacing: 2px;
+  }
+
+  /* ── Typography ── */
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1.05;
+    letter-spacing: -2px;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4.5vw, 64px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+  }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(22px, 2.5vw, 32px);
+    line-height: 1.3;
+  }
+  p, li {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: clamp(14px, 1.3vw, 18px);
+    line-height: 1.7;
+    color: var(--silver);
+  }
+  .accent { color: var(--dream-violet); }
+  .warm { color: var(--dawn); }
+  .soft { color: var(--dream-rose); }
+  em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1em; color: var(--moon); }
+
+  /* ── Shared Elements ── */
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--dream-violet), transparent);
+    margin: 32px 0;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--whisper);
+    margin-bottom: 20px;
+  }
+  .quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(20px, 2.5vw, 34px);
+    line-height: 1.5;
+    color: var(--silver);
+    max-width: 700px;
+    position: relative;
+    padding-left: 24px;
+    border-left: 2px solid var(--dream-violet);
+  }
+  .quote-source {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--whisper);
+    margin-top: 16px;
+    font-style: normal;
+    letter-spacing: 1px;
+  }
+
+  /* ── Backgrounds ── */
+  .bg-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  /* ── SLIDE 1: Title ── */
+  .slide-1 {
+    background: radial-gradient(ellipse 80% 60% at 30% 50%, rgba(74, 111, 165, 0.08), transparent),
+                radial-gradient(ellipse 60% 80% at 70% 60%, rgba(123, 104, 174, 0.06), transparent),
+                var(--deep);
+    text-align: center;
+    align-items: center;
+  }
+  .slide-1 h1 {
+    font-size: clamp(64px, 10vw, 140px);
+    letter-spacing: 12px;
+    background: linear-gradient(180deg, var(--moon) 0%, var(--silver) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 24px;
+    animation: fadeUp 1.5s ease-out;
+  }
+  .slide-1 .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(18px, 2.2vw, 28px);
+    color: var(--silver);
+    letter-spacing: 2px;
+    animation: fadeUp 1.5s ease-out 0.3s both;
+  }
+  .slide-1 .meta {
+    margin-top: 60px;
+    font-size: 12px;
+    color: var(--whisper);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    animation: fadeUp 1.5s ease-out 0.6s both;
+  }
+  .moon-glow {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232, 228, 223, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
+    50% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SLIDE 2: The Problem ── */
+  .slide-2 {
+    background: var(--deep);
+  }
+  .slide-2 .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) {
+    .slide-2 .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .fragment-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .fragment-list li {
+    padding: 14px 20px;
+    background: rgba(255,255,255,0.02);
+    border-left: 2px solid var(--twilight);
+    border-radius: 0 8px 8px 0;
+    font-size: 15px;
+    transition: all 0.3s;
+  }
+  .fragment-list li:hover {
+    border-left-color: var(--dream-violet);
+    background: rgba(123, 104, 174, 0.04);
+  }
+  .lost-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--dream-rose);
+    opacity: 0.7;
+    margin-left: 12px;
+  }
+
+  /* ── SLIDE 3: What is DREAMS ── */
+  .slide-3 {
+    background: radial-gradient(ellipse 70% 50% at 80% 50%, rgba(123, 104, 174, 0.05), transparent),
+                var(--deep);
+  }
+  .feature-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  @media (max-width: 900px) {
+    .feature-cards { grid-template-columns: 1fr; }
+  }
+  .feature-card {
+    padding: 32px 28px;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 16px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--dream-violet), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-card:hover {
+    background: rgba(255,255,255,0.025);
+    transform: translateY(-4px);
+  }
+  .feature-card h3 {
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+  .feature-card p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+    opacity: 0.7;
+  }
+
+  /* ── SLIDE 4: How It Works ── */
+  .slide-4 {
+    background: var(--deep);
+  }
+  .flow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 40px;
+    max-width: 900px;
+  }
+  .flow-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    align-items: start;
+  }
+  .flow-row:last-child { border-bottom: none; }
+  .flow-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--dream-violet);
+    padding-top: 2px;
+  }
+  .flow-content h3 {
+    font-size: 18px;
+    margin-bottom: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--moon);
+  }
+  .flow-content p {
+    font-size: 14px;
+    color: var(--silver);
+  }
+  .flow-example {
+    margin-top: 12px;
+    padding: 14px 18px;
+    background: rgba(123, 104, 174, 0.06);
+    border-radius: 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--silver);
+    line-height: 1.6;
+  }
+  .flow-example .agent-voice {
+    color: var(--dream-violet);
+    display: block;
+    margin-top: 8px;
+  }
+  .flow-tag {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+  .tag-free { background: rgba(74, 222, 128, 0.1); color: #4ade80; }
+  .tag-burst { background: rgba(212, 163, 115, 0.1); color: var(--dawn); }
+
+  /* ── SLIDE 5: Architecture ── */
+  .slide-5 {
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(26, 26, 46, 0.8), transparent),
+                var(--deep);
+  }
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 40px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .arch-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .arch-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .arch-layer {
+    padding: 20px 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+  }
+  .arch-layer::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 12px;
+    background: rgba(255,255,255,0.08);
+  }
+  .arch-layer:last-child::after { display: none; }
+  .layer-human { background: rgba(196, 114, 127, 0.08); border-color: rgba(196, 114, 127, 0.15); }
+  .layer-agent { background: rgba(123, 104, 174, 0.08); border-color: rgba(123, 104, 174, 0.15); }
+  .layer-memory { background: rgba(74, 111, 165, 0.08); border-color: rgba(74, 111, 165, 0.15); }
+  .layer-compute { background: rgba(212, 163, 115, 0.08); border-color: rgba(212, 163, 115, 0.15); }
+  .arch-layer-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .layer-human .arch-layer-name { color: var(--dream-rose); }
+  .layer-agent .arch-layer-name { color: var(--dream-violet); }
+  .layer-memory .arch-layer-name { color: var(--dream-blue); }
+  .layer-compute .arch-layer-name { color: var(--dawn); }
+  .arch-layer p { font-size: 13px; line-height: 1.5; }
+
+  .arch-details { display: flex; flex-direction: column; gap: 20px; }
+  .arch-detail-card {
+    padding: 18px 22px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 10px;
+  }
+  .arch-detail-card h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--moon);
+    margin-bottom: 6px;
+  }
+  .arch-detail-card p { font-size: 13px; }
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .cost-table td {
+    font-size: 13px;
+    padding: 6px 0;
+    color: var(--silver);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .cost-table td:last-child { text-align: right; color: #4ade80; font-weight: 500; }
+
+  /* ── SLIDE 6: Close ── */
+  .slide-6 {
+    background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(123, 104, 174, 0.06), transparent),
+                var(--deep);
+    text-align: center;
+    align-items: center;
+  }
+  .slide-6 h2 {
+    font-size: clamp(32px, 4vw, 56px);
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+  .timeline {
+    display: flex;
+    gap: 2px;
+    margin: 40px 0;
+    max-width: 600px;
+    width: 100%;
+  }
+  .timeline-block {
+    flex: 1;
+    padding: 14px 8px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--silver);
+  }
+  .timeline-block span {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--moon);
+    margin-bottom: 4px;
+  }
+  .tl-1 { background: rgba(196, 114, 127, 0.1); }
+  .tl-2 { background: rgba(123, 104, 174, 0.1); }
+  .tl-3 { background: rgba(74, 111, 165, 0.1); }
+  .tl-4 { background: rgba(212, 163, 115, 0.1); }
+
+  .ask {
+    margin-top: 48px;
+    padding: 28px 40px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    max-width: 500px;
+  }
+  .ask h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--moon);
+  }
+  .ask ul {
+    list-style: none;
+    text-align: left;
+  }
+  .ask li {
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--silver);
+  }
+  .ask li::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dream-violet);
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+
+  /* ── Print Styles ── */
+  @media print {
+    html { scroll-snap-type: none; }
+    .slide { min-height: auto; page-break-after: always; padding: 40px 60px; }
+    .slide-nav, .slide-counter { display: none; }
+    .bg-grain, .orb, .moon-glow { display: none; }
+    body { background: white; color: #1a1a2e; }
+    h1, h2, h3 { color: #1a1a2e; -webkit-text-fill-color: #1a1a2e; }
+    p, li { color: #444; }
+    .feature-card, .arch-layer, .arch-detail-card, .ask { border-color: #ddd; background: #f8f8f8; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation Dots -->
+<nav class="slide-nav" id="slideNav">
+  <button class="slide-dot active" data-slide="0"></button>
+  <button class="slide-dot" data-slide="1"></button>
+  <button class="slide-dot" data-slide="2"></button>
+  <button class="slide-dot" data-slide="3"></button>
+  <button class="slide-dot" data-slide="4"></button>
+  <button class="slide-dot" data-slide="5"></button>
+</nav>
+<div class="slide-counter" id="slideCounter">01 / 06</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SLIDE 1: Title                         -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide-1" id="slide-0">
+  <div class="bg-grain"></div>
+  <div class="moon-glow"></div>
+  <h1>DREAMS</h1>
+  <p class="subtitle">The AI that thinks while you sleep</p>
+  <div class="meta">Nosana &times; ElizaOS &times; Clude &times; Solana</div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SLIDE 2: The Problem                   -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide-2" id="slide-1">
+  <div class="bg-grain"></div>
+  <span class="tag">The Problem</span>
+  <h2>We lose our best thinking<br>before it becomes anything</h2>
+  <div class="divider"></div>
+
+  <div class="problem-grid">
+    <div>
+      <p style="margin-bottom: 24px;">
+        Every day, your mind produces its most original work in the margins &mdash;
+        the shower thought, the 3am realization, the dream you almost remembered,
+        the thing you saw that struck you but you can't say why.
+      </p>
+      <p style="margin-bottom: 24px;">
+        These fragments are the raw material of insight. But there's no place for them.
+        They don't fit in a to-do list. They're not ready for a note-taking app.
+        They're <em>pre-verbal</em>, half-formed, alive.
+      </p>
+      <p>
+        So they vanish. And with them goes the connective tissue between
+        your best ideas.
+      </p>
+    </div>
+    <ul class="fragment-list">
+      <li>The dream about the house with rooms you'd never seen <span class="lost-label">lost by noon</span></li>
+      <li>The shower thought connecting two projects <span class="lost-label">lost by the time you toweled off</span></li>
+      <li>The car ride realization about what's actually wrong <span class="lost-label">lost at the next red light</span></li>
+      <li>The thing you wanted to do but forgot <span class="lost-label">lost before you found a pen</span></li>
+      <li>The 2am insight you were sure you'd remember <span class="lost-label">gone by morning</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SLIDE 3: What is DREAMS                -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide-3" id="slide-2">
+  <div class="bg-grain"></div>
+  <span class="tag">The Solution</span>
+  <h2>An AI agent that dreams with you</h2>
+  <div class="divider"></div>
+  <p style="max-width: 680px; margin-bottom: 8px;">
+    DREAMS is not a note-taking app. Not a chatbot. Not a search engine.
+    It's an <em>ElizaOS agent</em> whose only mode is dreaming &mdash; open-ended,
+    non-goal-directed, associative, poetic. You share dream fragments.
+    It listens, asks one sensory question, and drifts back to sleep.
+    At night, it dreams your fragments into new shapes. You wake up to its dream journal.
+  </p>
+
+  <div class="feature-cards">
+    <div class="feature-card">
+      <span class="feature-icon">&#9790;</span>
+      <h3>The Drowsy Agent</h3>
+      <p>The agent has <em>wakefulness</em> that depletes with each response.
+         Dreams wake it up. Tasks put it to sleep. Silence is its default state &mdash;
+         and its most powerful behavior costs zero compute.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#10047;</span>
+      <h3>The Clinamen Engine</h3>
+      <p>Every AI retrieves by similarity. DREAMS retrieves by <em>productive dissimilarity</em> &mdash;
+         forcing unexpected connections between fragments that don't belong together.
+         The swerve that creates novelty.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#9683;</span>
+      <h3>Dream Cycles</h3>
+      <p>Nightly GPU bursts modeled on real sleep architecture &mdash;
+         light sleep, deep sleep, REM, clear light.
+         The agent consolidates, transforms, free-associates,
+         and writes a dream journal entry. On-chain via Clude.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SLIDE 4: How It Works (UX Flow)        -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide-4" id="slide-3">
+  <div class="bg-grain"></div>
+  <span class="tag">The Experience</span>
+  <h2>A day with DREAMS</h2>
+  <div class="divider"></div>
+
+  <div class="flow-container">
+    <div class="flow-row">
+      <div class="flow-time">Morning</div>
+      <div class="flow-content">
+        <h3>You write a dream</h3>
+        <p>Text or voice memo. No categories, no tags. Just: what visited you last night?</p>
+        <div class="flow-example">
+          "I dreamed about a house with rooms I'd never seen before. My dad was there but younger than me."
+          <span class="agent-voice">Agent: "What did the light look like in those rooms?"</span>
+        </div>
+        <span class="flow-tag tag-free">Zero compute &mdash; one tiny inference call</span>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-time">Afternoon</div>
+      <div class="flow-content">
+        <h3>You capture a fragment</h3>
+        <p>A shower thought. A photo of something that struck you. A half-sentence. The agent receives it quietly. Maybe asks one thing. Then silence.</p>
+        <div class="flow-example">
+          "Had a thought about why my old business failed &mdash; it wasn't the product, it was that I never let anyone help."
+          <span class="agent-voice">Agent: "The help." &nbsp;&nbsp;&nbsp;[drifting]</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-time">Night</div>
+      <div class="flow-content">
+        <h3>The agent dreams</h3>
+        <p>A Nosana GPU burst fires. The agent loads your Dreamtime &mdash; all fragments, all prior dreams &mdash; and runs a dream cycle: replay, dissolve the obvious, clinamen swerve, dream image generation. Writes to Clude on-chain.</p>
+        <span class="flow-tag tag-burst">15 min GPU burst &mdash; $0.05 on Nosana</span>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-time">Next Morning</div>
+      <div class="flow-content">
+        <h3>You wake up to the agent's dream</h3>
+        <p>Not a report. Not action items. A dream journal entry &mdash; poetic, imagistic, surprising.</p>
+        <div class="flow-example">
+          "I dreamed about doors last night. You've been circling doors for weeks. I don't think you're looking for what's behind the door. I think you're noticing that doors exist &mdash; that there are rooms in you that you haven't walked into yet. Your father was younger than you in the dream. Maybe he's in one of those rooms, the version of him that hadn't closed any doors yet."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SLIDE 5: Technical Architecture        -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide-5" id="slide-4">
+  <div class="bg-grain"></div>
+  <span class="tag">Architecture</span>
+  <h2>How it's built</h2>
+  <div class="divider"></div>
+
+  <div class="arch-grid">
+    <div class="arch-stack">
+      <div class="arch-layer layer-human">
+        <div class="arch-layer-name">Human Interface</div>
+        <p>PWA on Solana Seeker. Text + voice capture. Dream journal display. Dual journal view (yours and the agent's).</p>
+      </div>
+      <div class="arch-layer layer-agent">
+        <div class="arch-layer-name">ElizaOS Agent Runtime</div>
+        <p>Custom "Dreamer" character. Drowsiness state machine. Dream classifier (shouldRespond override). Sensory question generator. IGNORE action for non-dream input.</p>
+      </div>
+      <div class="arch-layer layer-memory">
+        <div class="arch-layer-name">Clude Memory Layer &mdash; Solana L2</div>
+        <p>5 memory types with biological decay. Dream cycles (5-phase consolidation). Clinamen retrieval. Solana memo hashing for on-chain provenance. Your dreams are portable and owned.</p>
+      </div>
+      <div class="arch-layer layer-compute">
+        <div class="arch-layer-name">Nosana GPU Compute</div>
+        <p>Qwen3.5-27B-AWQ-4bit. Daytime: tiny inference calls via free hackathon endpoint. Night: burst job on RTX 3090 for dream cycle. Pay only for what you dream.</p>
+      </div>
+    </div>
+
+    <div class="arch-details">
+      <div class="arch-detail-card">
+        <h4>Custom ElizaOS Plugin: plugin-dreams</h4>
+        <p>Wakefulness counter (3&rarr;2&rarr;1&rarr;0&rarr;silence). Dream classifier. Fragment storage to Clude. Nightly dream cycle scheduler. Dream journal provider. All wired through ElizaOS plugin interface.</p>
+      </div>
+      <div class="arch-detail-card">
+        <h4>Dream Cycle Pipeline (Nightly)</h4>
+        <p>1. Recall today's fragments from Clude<br>
+           2. Run clinamen &mdash; surface unexpected connections<br>
+           3. Run Clude's 5-phase dream (consolidation, compaction, reflection, contradiction resolution, emergence)<br>
+           4. Feed into Qwen3.5 on Nosana for dream journal generation<br>
+           5. Store as introspective memory + hash to Solana</p>
+      </div>
+      <div class="arch-detail-card">
+        <h4>Cost Per User</h4>
+        <table class="cost-table">
+          <tr><td>Daytime inference (20-50 calls)</td><td>$0.02/day</td></tr>
+          <tr><td>Nightly dream cycle (15 min burst)</td><td>$0.05/night</td></tr>
+          <tr><td>Clude / Supabase</td><td>Free tier</td></tr>
+          <tr><td>Solana transactions</td><td>$0.01/day</td></tr>
+          <tr><td style="color: var(--moon); font-weight: 500;">Total per user</td><td style="font-size: 15px;">~$3/month</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SLIDE 6: The Ask / Close               -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide-6" id="slide-5">
+  <div class="bg-grain"></div>
+  <span class="tag">The Opportunity</span>
+  <h2>11 days to build.<br>$3,000 prize pool.<br><span class="accent">No one else is building this.</span></h2>
+
+  <div class="timeline">
+    <div class="timeline-block tl-1"><span>Days 1-2</span>Foundation</div>
+    <div class="timeline-block tl-2"><span>Days 3-5</span>Dreamer Agent</div>
+    <div class="timeline-block tl-3"><span>Days 6-8</span>Dream Cycles</div>
+    <div class="timeline-block tl-4"><span>Days 9-11</span>UI + Demo</div>
+  </div>
+
+  <div class="ask">
+    <h3>What I need</h3>
+    <ul>
+      <li>Time allocation through April 14</li>
+      <li>Access to RTX 3090 for local dev + testing</li>
+      <li>Anthropic API key for Clude dream cycles</li>
+    </ul>
+  </div>
+
+  <div style="margin-top: 56px; max-width: 600px;">
+    <div class="quote">
+      And finally, you would dream &hellip; where you are now.
+      You would dream the dream of living the life
+      that you are actually living today.
+      <div class="quote-source">&mdash; Alan Watts</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Slide navigation
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.slide-dot');
+  const counter = document.getElementById('slideCounter');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(slides).indexOf(entry.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        counter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => observer.observe(s));
+  dots.forEach(d => {
+    d.addEventListener('click', () => {
+      slides[parseInt(d.dataset.slide)].scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    const current = Array.from(dots).findIndex(d => d.classList.contains('active'));
+    if ((e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') && current < slides.length - 1) {
+      e.preventDefault();
+      slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+    }
+    if ((e.key === 'ArrowUp' || e.key === 'ArrowLeft') && current > 0) {
+      e.preventDefault();
+      slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>
+</body>
+</html>

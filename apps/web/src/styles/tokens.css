@@ -1,0 +1,199 @@
+/* ============================================================
+   DREAMERS — Design Tokens
+   Mode switch via [data-mode="milam"] | [data-mode="rolpa"]
+   A11y: AA-corrected palette per a11y-perf review
+   ============================================================ */
+
+:root {
+  /* ---------- COLOR PRIMITIVES ---------- */
+
+  /* MILAM palette — midnight & moonlight */
+  --milam-midnight-900: #0a0e27;             /* deepest sky */
+  --milam-midnight-800: #141938;             /* horizon */
+  --milam-midnight-700: #1a1a3e;             /* mid sky / panel */
+  --milam-midnight-600: oklch(34% 0.05 285); /* velvet shadow */
+  --milam-mauve-500:    #9a7eb0;             /* accent — DECORATIVE only on deep-purple */
+  --milam-mauve-400:    oklch(78% 0.05 312);
+  --milam-mauve-300:    #c9b8db;             /* lavender — ≥18.66px bold only on midnight */
+  --milam-cream-100:    #f4e8d8;             /* moonlight cream — body text */
+  --milam-cream-200:    oklch(88% 0.04 78);
+  --milam-gold-500:     #d4a574;             /* warm gold — decorative + halos */
+  --milam-gold-400:     oklch(84% 0.12 82);
+
+  /* ROLPA palette — etheric daytime (a11y corrected) */
+  --rolpa-linen-50:    #faf0e6;
+  --rolpa-peach-200:   #f5d5c0;
+  --rolpa-ink-900:     #3d2a3a;   /* mandatory body text on linen/peach (AAA) */
+  --rolpa-rose-deep:   #b5645a;   /* links / accent text — AA on linen */
+  --rolpa-plum-700:    #6b3f5a;   /* focus ring on day */
+  --rolpa-rose-decor:  #e8a598;   /* DECORATIVE ONLY (orbs/gradients) */
+  --rolpa-gold-decor:  #d4a574;   /* DECORATIVE ONLY */
+  --rolpa-mauve-500:   #9a7eb0;   /* shared mauve tie-in */
+
+  /* ---------- SEMANTIC TOKENS (mode-agnostic) ---------- */
+  --bg-base:        var(--milam-midnight-900);
+  --bg-elevated:    var(--milam-midnight-800);
+  --bg-velvet:      var(--milam-midnight-700);
+  --fg-primary:     var(--milam-cream-100);
+  --fg-secondary:   var(--milam-mauve-300);
+  --fg-whisper:     var(--milam-mauve-300);
+  --accent:         var(--milam-gold-500);
+  --accent-soft:    var(--milam-mauve-300);
+  --focus-ring:     var(--milam-cream-100);
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --font-display:   var(--font-fraunces), 'Cormorant Garamond', Georgia, serif;
+  --font-ui:        var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono:      'JetBrains Mono', ui-monospace, monospace;
+
+  --text-micro:    clamp(0.6875rem, 0.65rem + 0.2vw, 0.75rem);
+  --text-small:    clamp(0.8125rem, 0.78rem + 0.2vw, 0.875rem);
+  --text-body:     clamp(0.9375rem, 0.9rem + 0.3vw, 1.0625rem);
+  --text-lede:     clamp(1.125rem, 1.05rem + 0.5vw, 1.375rem);
+  --text-question: clamp(1.25rem, 1.1rem + 0.8vw, 1.75rem);
+  --text-echo:     clamp(2rem, 1.6rem + 2vw, 3.25rem);
+  --text-dream:    clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem);
+  --text-drop:     clamp(3.25rem, 2.8rem + 2vw, 4.5rem);
+
+  --leading-tight:  1.2;
+  --leading-snug:   1.4;
+  --leading-normal: 1.55;
+  --leading-dream:  1.7;
+  --leading-loose:  1.85;
+
+  --tracking-tight:  -0.015em;
+  --tracking-normal: 0em;
+  --tracking-wide:   0.04em;
+  --tracking-label:  0.12em;
+
+  /* ---------- SPACING (4px base) ---------- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-7:  3rem;
+  --space-8:  4.5rem;
+  --space-9:  7rem;
+  --space-10: 11rem;
+
+  /* ---------- RADII ---------- */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   22px;
+  --radius-xl:   34px;
+  --radius-pill: 9999px;
+  --radius-organic: 42% 58% 53% 47% / 45% 52% 48% 55%;
+
+  /* ---------- MOTION ---------- */
+  --dur-instant:  80ms;
+  --dur-micro:    180ms;
+  --dur-fast:     300ms;
+  --dur-medium:   500ms;
+  --dur-slow:     900ms;
+  --dur-glacial:  1400ms;
+  --dur-breath:   4000ms;
+
+  --ease-out-soft:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-drift:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-stir:         cubic-bezier(0.05, 0.7, 0.1, 1.0);
+  --ease-breath:       cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-velvet:       cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Wakefulness-driven breath (JS may override). Unifies MILAM + ROLPA rhythm. */
+  --breath-duration: 4s;
+
+  /* ---------- SHADOWS (velvet) ---------- */
+  --velvet-highlight: inset 0 1px 0 0 rgba(244, 232, 216, 0.06);
+  --velvet-inset:     inset 0 1px 2px 0 rgba(10, 14, 39, 0.45),
+                      inset 0 0 0 1px rgba(201, 184, 219, 0.08);
+  --velvet-hover:     inset 0 1px 0 0 rgba(244, 232, 216, 0.10),
+                      inset 0 0 0 1px rgba(201, 184, 219, 0.15),
+                      0 0 24px -8px rgba(201, 184, 219, 0.25);
+
+  --shadow-hush: 0 1px 2px 0 rgba(10, 14, 39, 0.4);
+  --shadow-soft: 0 4px 24px -8px rgba(10, 14, 39, 0.6);
+  --shadow-moon: 0 0 60px -20px rgba(244, 232, 216, 0.4);
+  --shadow-gold: 0 0 40px -12px rgba(212, 165, 116, 0.55);
+
+  /* ---------- BLUR ---------- */
+  --blur-xs:  4px;
+  --blur-sm:  8px;
+  --blur-md:  16px;
+  --blur-lg:  32px;
+  --blur-xl:  48px;
+  --blur-orb: 40px;
+
+  /* ---------- GRAIN ---------- */
+  --grain-opacity: 0.04;
+}
+
+/* ============================================================ MILAM ============================================================ */
+[data-mode="milam"] {
+  --bg-base:      var(--milam-midnight-900);
+  --bg-elevated:  var(--milam-midnight-800);
+  --bg-velvet:    var(--milam-midnight-700);
+  --fg-primary:   var(--milam-cream-100);
+  --fg-secondary: var(--milam-mauve-300);
+  --fg-whisper:   var(--milam-mauve-300);
+  --accent:       var(--milam-gold-500);
+  --accent-soft:  var(--milam-mauve-300);
+  --focus-ring:   var(--milam-cream-100);
+  color-scheme: dark;
+}
+
+/* ============================================================ ROLPA ============================================================ */
+[data-mode="rolpa"] {
+  --bg-base:      var(--rolpa-linen-50);
+  --bg-elevated:  var(--rolpa-peach-200);
+  --bg-velvet:    var(--rolpa-peach-200);
+  --fg-primary:   var(--rolpa-ink-900);
+  --fg-secondary: var(--rolpa-rose-deep);
+  --fg-whisper:   var(--rolpa-mauve-500);
+  --accent:       var(--rolpa-rose-deep);
+  --accent-soft:  var(--rolpa-mauve-500);
+  --focus-ring:   var(--rolpa-plum-700);
+  color-scheme: light;
+}
+
+/* ============================================================ HIGH CONTRAST ============================================================ */
+@media (prefers-contrast: more) {
+  :root {
+    --milam-mauve-300: var(--milam-cream-100);
+  }
+  [data-mode="rolpa"] {
+    --fg-secondary: var(--rolpa-plum-700);
+  }
+}
+
+/* ============================================================ GLOBAL GRAIN ============================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ============================================================ REDUCED MOTION ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-micro:   0ms;
+    --dur-fast:    0ms;
+    --dur-medium:  0ms;
+    --dur-slow:    0ms;
+    --dur-glacial: 0ms;
+    --breath-duration: 0s;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

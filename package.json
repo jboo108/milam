@@ -1,0 +1,10 @@
+{
+  "name": "dreamers",
+  "private": true,
+  "version": "0.0.0",
+  "_workspaces_note": "Workspace globs intentionally omitted: bun's workspace install hoists deps to dreams/node_modules, which puts them outside apps/web's turbopack root and breaks `next dev`. Each app installs its own deps for now. Re-enable with hoisted+resolutions once both apps exist.",
+  "scripts": {
+    "dev:web": "bun --filter web dev",
+    "build:web": "bun --filter web build"
+  }
+}
